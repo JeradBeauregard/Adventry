@@ -1,0 +1,56 @@
+extends layout
+
+block content
+    body
+        h1 Pet Management
+
+        // Display all pets
+        h2 Pet List
+        table(border="1")
+            thead
+                tr
+                    th ID
+                    th User
+                    th Name
+                    th Type
+                    th Level
+                    th Happiness
+                    th Actions
+            tbody
+                each pet in pets
+                    tr
+                        td #{pet.id}
+                        td #{pet.username}
+                        td #{pet.name}
+                        td #{pet.type}
+                        td #{pet.level}
+                        td #{pet.happiness}
+                        td 
+                            form(action=`/petCMS/update/${pet.id}` method="POST")
+                                input(type="text" name="name" value=pet.name required)
+                                input(type="text" name="type" value=pet.type required)
+                                input(type="number" name="level" value=pet.level required)
+                                input(type="number" name="happiness" value=pet.happiness required)
+                                button(type="submit") Update
+                            form(action=`/petCMS/delete/${pet.id}` method="POST")
+                                button(type="submit") Delete
+
+        // Form to create a new pet
+        h2 Add New Pet
+        form(action="/petCMS/create" method="POST")
+            label(for="userId") User ID:
+            input(type="number" name="userId" required)
+            br
+            label(for="name") Name:
+            input(type="text" name="name" required)
+            br
+            label(for="type") Type:
+            input(type="text" name="type" required)
+            br
+            label(for="level") Level:
+            input(type="number" name="level" value="1" required)
+            br
+            label(for="happiness") Happiness:
+            input(type="number" name="happiness" value="50" required)
+            br
+            button(type="submit") Add Pet

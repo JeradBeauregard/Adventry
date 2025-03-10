@@ -1,0 +1,166 @@
+/* General Page Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
+    background-color: #f4f5f0; /* Soft sage green background */
+    color: #2c3e50; /* Deep slate gray */
+}
+
+/* Header */
+h1, h2 {
+    text-align: center;
+    color: #2e4f4f; /* Dark sage green */
+    margin: 10px 0;
+}
+
+/* Navigation Bar */
+nav {
+    background-color: #8aa899; /* Medium sage green */
+    padding: 8px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 5px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 6px 12px;
+    background-color: #5e8572; /* Dark sage green */
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background 0.2s ease-in-out;
+}
+
+nav a:hover {
+    background-color: #3f6655; /* Darker green */
+}
+
+/* Content Container */
+section {
+    max-width: 750px;
+    margin: 15px auto;
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #d4ddd0; /* Light green border */
+}
+
+th {
+    background-color: #8aa899; /* Medium sage green */
+    color: white;
+}
+
+/* FORM STYLING */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 500px;
+    margin: 15px auto;
+    padding: 15px;
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+    color: #2e4f4f; /* Dark sage green */
+    margin-bottom: 3px;
+}
+
+/* Input Fields */
+input, textarea, select {
+    padding: 10px;
+    border: 1px solid #a8bfa4; /* Soft sage green border */
+    border-radius: 5px;
+    font-size: 14px;
+    background: #f8f9f5; /* Light sage background */
+    transition: border 0.2s ease-in-out;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #5e8572; /* Darker sage green focus */
+    outline: none;
+    background: #ffffff;
+}
+
+/* Buttons */
+button {
+    padding: 8px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+/* Primary Button (Default, Save, Add) */
+button.primary {
+    background-color: #5e8572; /* Dark sage green */
+    color: white;
+}
+
+button.primary:hover {
+    background-color: #3f6655;
+}
+
+/* Edit Button */
+button.edit {
+    background-color: #007bff; /* Blue */
+    color: white;
+}
+
+button.edit:hover {
+    background-color: #0056b3;
+}
+
+/* Delete Button */
+button.delete {
+    background-color: #dc3545; /* Red */
+    color: white;
+}
+
+button.delete:hover {
+    background-color: #a71d2a;
+}
+
+/* Links */
+a {
+    color: #5e8572;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+a:hover {
+    text-decoration: underline;
+}

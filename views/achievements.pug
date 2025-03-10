@@ -1,0 +1,60 @@
+extends layout
+
+block content
+    body
+        h1 Achievement Management
+
+        // Display all achievements
+        h2 Achievement List
+        table(border="1")
+            thead
+                tr
+                    th ID
+                    th User
+                    th Name
+                    th Description
+                    th Completed
+                    th Earned At
+                    th Actions
+            tbody
+                each achievement in achievements
+                    tr
+                        td #{achievement.id}
+                        td #{achievement.username}
+                        td #{achievement.name}
+                        td #{achievement.description}
+                        td #{achievement.isCompleted ? "Yes" : "No"}
+                        td #{achievement.earnedAt || "Not Earned"}
+                        td 
+                            form(action=`/achievementCMS/update/${achievement.id}` method="POST")
+                                input(type="text" name="name" value=achievement.name required)
+                                input(type="text" name="description" value=achievement.description required)
+                                select(name="isCompleted")
+                                    option(value="true" selected=achievement.isCompleted) Yes
+                                    option(value="false" selected=!achievement.isCompleted) No
+                                input(type="datetime-local" name="earnedAt" value=achievement.earnedAt)
+                                button(type="submit") Update
+                            form(action=`/achievementCMS/delete/${achievement.id}` method="POST")
+                                button(type="submit") Delete
+
+        // Form to create a new achievement
+        h2 Add New Achievement
+        form(action="/achievementCMS/create" method="POST")
+            label(for="userId") User ID:
+            input(type="number" name="userId" required)
+            br
+            label(for="name") Name:
+            input(type="text" name="name" required)
+            br
+            label(for="description") Description:
+            textarea(name="description" required)
+            br
+            label(for="isCompleted") Completed:
+            select(name="isCompleted")
+                option(value="true") Yes
+                option(value="false" selected) No
+            br
+            label(for="earnedAt") Earned At:
+            input(type="datetime-local" name="earnedAt")
+            br
+            button(type="submit") Add Achievement

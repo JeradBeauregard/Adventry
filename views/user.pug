@@ -1,0 +1,45 @@
+extends layout
+
+block content
+    body
+        h1 User Management
+
+        // Display all users
+        h2 User List
+        table(border="1")
+            thead
+                tr
+                    th ID
+                    th Username
+                    th Email
+                    th Shards
+                    th Actions
+            tbody
+                each user in users
+                    tr
+                        td #{user.id}
+                        td #{user.username}
+                        td #{user.email}
+                        td #{user.shards}
+                        td 
+                            form(action=`/userCMS/update/${user.id}` method="POST")
+                                input(type="text" name="username" value=user.username required)
+                                input(type="email" name="email" value=user.email required)
+                                input(type="number" name="shards" value=user.shards required)
+                                button(type="submit") Update
+                            form(action=`/userCMS/delete/${user.id}` method="POST")
+                                button(type="submit") Delete
+
+        // Form to create a new user
+        h2 Add New User
+        form(action="/userCMS/create" method="POST")
+            label(for="username") Username:
+            input(type="text" name="username" required)
+            br
+            label(for="email") Email:
+            input(type="email" name="email" required)
+            br
+            label(for="shards") Shards:
+            input(type="number" name="shards" value="0" required)
+            br
+            button(type="submit") Add User

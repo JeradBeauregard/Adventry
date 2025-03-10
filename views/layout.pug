@@ -1,0 +1,22 @@
+doctype html
+html
+    head
+        title CMS Dashboard
+        link(rel="stylesheet" href="/styles/CMS.css")
+    body
+        h1 CMS Dashboard
+        nav
+            ul
+                li 
+                    a(href="/") Home
+                li 
+                    a(href="/userCMS") Manage Users
+                li 
+                    a(href="/petCMS") Manage Pets
+                li 
+                    a(href="/journalCMS") Manage Journals
+                li 
+                    a(href="/achievementsCMS") Manage Achievements
+        hr
+        block content  // This will be replaced by the actual CMS page content
+

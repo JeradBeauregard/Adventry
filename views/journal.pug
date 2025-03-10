@@ -1,0 +1,40 @@
+extends layout
+
+block content
+    body
+        h1 Journal Management
+
+        // Display all journal entries
+        h2 Journal Entries
+        table(border="1")
+            thead
+                tr
+                    th ID
+                    th User
+                    th Content
+                    th Created At
+                    th Actions
+            tbody
+                each journal in journals
+                    tr
+                        td #{journal.id}
+                        td #{journal.username}
+                        td #{journal.content}
+                        td #{journal.createdAt}
+                        td 
+                            form(action=`/journalCMS/update/${journal.id}` method="POST")
+                                input(type="text" name="content" value=journal.content required)
+                                button(type="submit") Update
+                            form(action=`/journalCMS/delete/${journal.id}` method="POST")
+                                button(type="submit") Delete
+
+        // Form to create a new journal entry
+        h2 Add New Journal Entry
+        form(action="/journalCMS/create" method="POST")
+            label(for="userId") User ID:
+            input(type="number" name="userId" required)
+            br
+            label(for="content") Content:
+            textarea(name="content" required)
+            br
+            button(type="submit") Add Journal Entry
