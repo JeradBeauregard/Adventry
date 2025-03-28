@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&display=swap');
+
+.sign-in-container {
+    max-width: 390px;
+    background-color: #D9EEF3;
+    text-align: center;
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.adventry_title {
+    font-family: 'Caveat Brush', cursive;
+    color: #34A751;
+    font-size: 2rem;
+    border: 2px solid #34A751; 
+    padding: 5px 20px;
+    display: inline-block;
+    border-radius: 13px;
+    background-color: white;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.avatar {
+    width: 140px;
+    height: 120px;
+}
+
+.signin-heading {
+    font-family: 'Reem Kufi', sans-serif;
+    color: black;
+    font-size: 1.5rem;
+    margin-left: 20px;
+}
+
+.signin {
+    max-width: 350px; 
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+.input-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #6F6F6F;
+    margin: 10px 0 5px;
+    text-align: left;
+}
+
+.input-field {
+    padding: 15px;
+    border: 1px solid #34A751;
+    border-radius: 10px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.forgot-password {
+    font-family: 'Poppins', sans-serif;
+    color: #037DC4;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 600;
+    line-height: normal;    
+    display: block;
+    text-align: left;
+    margin: 15px 90px;
+}
+
+.sign-in-button {
+    font-family: 'Reem Kufi', sans-serif;
+    width: 100%;
+    padding: 10px;
+    background-color: #037DC4;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.or-text {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #888888;
+}
+
+.sign-up-text {
+    color: #888888;
+    font-size: 16px;
+  }
+
+.sign-up-text a {
+    color: #037DC4;
+    text-decoration: none;
+}
