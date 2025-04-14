@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../styles/signUp.css";
+import "./../styles/signUp.css";
 import SocialLoginButtons from "../components/SocialLoginButtons";
 
 const SignUpPage = () => {
