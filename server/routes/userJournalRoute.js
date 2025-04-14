@@ -1,19 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const journalService = require("../services/JournalSessionService");
+const journalService = require("../services/JournalSessionService"); // session = AI journaling flow
+const journalServ = require("../services/JournalService"); // user journal listing
 const authService = require("../services/authService");
 require("dotenv").config();
 
-let lastToken = null; // temporary token storage (testing only)
-
-// Middleware to check token (for PUG pages only)
 function requireAuth(req, res, next) {
-    const token = req.cookies.token;
-    if (!token) return res.redirect("/auth");
-    
+  const token = req.cookies.token;
+  if (!token) return res.redirect("/auth");
+
   try {
-    const decoded = jwt.verify(lastToken, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (err) {
@@ -21,37 +19,67 @@ function requireAuth(req, res, next) {
   }
 }
 
-// View all journals and form to start new one
+// View all journals + form
 router.get("/journals", requireAuth, async (req, res) => {
   try {
-    const [rows] = await journalService.getAllJournalsByUser(req.user.user_id);
-    res.render("userjournal", { journals: rows, username: req.user.username });
+    const journals = await journalServ.getAllJournalsForUser(req.user.user_id);
+    res.render("userjournal", { journals, username: req.user.username });
   } catch (error) {
     res.status(500).send("Error loading journals: " + error.message);
   }
 });
 
-// Handle starting a new journal
-router.post("/journals", requireAuth, async (req, res) => {
+// Create a new journal
+router.post("/create", requireAuth, async (req, res) => {
   try {
     const { title, message } = req.body;
-    await journalService.startJournal(req.user.user_id, title, message);
-    res.redirect("/journals");
+    const { journalId } = await journalService.startJournal(req.user.user_id, title, message);
+    res.redirect(`/journal/${journalId}`);
   } catch (error) {
     res.status(500).send("Failed to create journal: " + error.message);
   }
 });
 
-// Log out (clears token)
+// View a specific journal (conversation)
+router.get("/:id", requireAuth, async (req, res) => {
+  try {
+    const journalId = req.params.id;
+    const journal = await journalService.getJournal(journalId);
+
+    // Optional: check journal ownership (if journal.user_id is available)
+    res.render("journalView", {
+      journalId,
+      title: journal.title,
+      messages: journal.messages
+    });
+  } catch (error) {
+    res.status(404).send("Could not load journal: " + error.message);
+  }
+});
+
+// Add a reply message to the journal
+router.post("/:id/reply", requireAuth, async (req, res) => {
+  try {
+    const journalId = req.params.id;
+    const userMessage = req.body.message;
+
+    await journalService.addMessage(journalId, userMessage);
+    res.redirect(`/journal/${journalId}`);
+  } catch (error) {
+    res.status(500).send("Failed to reply: " + error.message);
+  }
+});
+
+// Log out (clears token cookie)
 router.get("/logout", (req, res) => {
-  lastToken = null;
+  res.clearCookie("token");
   res.redirect("/auth");
 });
 
-// For testing login (used by login route)
+// DEV ONLY: Simulate login via token
 router.post("/token", (req, res) => {
-  lastToken = req.body.token;
-  res.redirect("/journals");
+  res.cookie("token", req.body.token, { httpOnly: true });
+  res.redirect("/journal/journals");
 });
 
 module.exports = router;

@@ -1,0 +1,50 @@
+doctype html
+html
+  head
+    title= title
+    style.
+      body {
+        font-family: sans-serif;
+        max-width: 800px;
+        margin: auto;
+        padding: 2rem;
+      }
+      .message {
+        margin-bottom: 1rem;
+        padding: 1rem;
+        border-radius: 8px;
+      }
+      .user {
+        background: #e0f7fa;
+        text-align: right;
+      }
+      .system {
+        background: #f1f8e9;
+        text-align: left;
+      }
+  body
+    h1= title
+    a(href="/journal/journals") ← Back to Journals
+
+    hr
+
+    h2 Conversation
+
+    if messages.length > 0
+      each msg in messages
+        div.message(class=msg.sender)
+          strong #{msg.sender === 'user' ? 'You' : 'Journal Assistant'}:
+          p #{msg.message}
+    else
+      p No messages yet.
+
+    hr
+
+    h2 Continue Journal
+    form(action=`/journal/${journalId}/reply` method="POST")
+      textarea(name="message" rows="4" cols="50" required)
+      br
+      button(type="submit") Add Message
+
+    hr
+    a(href="/logout") Log Out

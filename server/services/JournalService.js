@@ -10,6 +10,18 @@ const getAllJournals = async () => {
     });
 };
 
+// get all journals for a user
+
+async function getAllJournalsForUser(user_id) {
+    const [rows] = await db.execute(
+      "SELECT * FROM journal_entries WHERE user_id = ? ORDER BY created_at DESC",
+      [user_id]
+    );
+    return rows;
+  }
+  
+
+
 const getJournalById = async (id) => {
     return new Promise((resolve, reject) => {
         db.query('SELECT journals.id, users.username, journals.content, journals.createdAt FROM journals JOIN users ON journals.userId = users.id WHERE journals.id = ?', [id], 
@@ -49,4 +61,4 @@ const deleteJournal = async (id) => {
     });
 };
 
-module.exports = { getAllJournals, getJournalById, createJournal, updateJournal, deleteJournal };
+module.exports = { getAllJournals, getJournalById, createJournal, updateJournal, deleteJournal, getAllJournalsForUser };
