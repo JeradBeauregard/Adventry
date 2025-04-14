@@ -9,7 +9,7 @@ html
     hr
 
     h2 Start a New Journal
-    form(action="/journals" method="POST")
+    form(action="/journal/create" method="POST")
       label(for="title") Title:
       input(type="text" name="title" required)
       br
@@ -25,7 +25,8 @@ html
       ul
         each journal in journals
           li
-            strong #{journal.title}
-            |  (Started on #{journal.created_at})
+            a(href=`/journal/${journal.id}`)
+              strong #{journal.title}
+              |  (Started on #{journal.created_at})
     else
       p You have no journals yet. Start one above!

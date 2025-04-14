@@ -20,17 +20,30 @@ router.post("/auth/register", async (req, res) => {
   }
 });
 
-// Handle login and set token cookie
+// Handle login and set token cookie, redirect to onboarding if not completed
+const onboardingService = require("../services/OnboardingService");
+
 router.post("/auth/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const token = await authService.login(email, password);
+
     res.cookie("token", token, { httpOnly: true });
-    res.redirect("/auth/me");
+
+    // Decode to get user ID
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const onboardingDone = await onboardingService.isOnboardingComplete(decoded.user_id);
+
+    if (!onboardingDone) {
+      return res.redirect("/journal/onboarding");
+    }
+
+    res.redirect("/journal/journals"); // or /auth/me if you still want the profile
   } catch (error) {
     res.status(401).send("Login failed: " + error.message);
   }
 });
+
 
 // Display user info after login
 router.get("/auth/me", async (req, res) => {
@@ -44,5 +57,7 @@ router.get("/auth/me", async (req, res) => {
     res.status(400).send("Could not load user profile: " + error.message);
   }
 });
+
+
 
 module.exports = router;

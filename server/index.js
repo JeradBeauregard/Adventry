@@ -1,5 +1,9 @@
 // REQUIRED
 
+require("dotenv").config({ path: __dirname + "/.env" }); // ⬅️ force it to use server/.env
+
+
+
 const express = require("express"); // imports express modules
 const path = require("path"); // imports node.js pathing modules
 //set up Express object and port
@@ -24,7 +28,7 @@ console.log(`Listening on http://localhost:${port}`); // when server runs callba
 // ROUTING
 
 const userJournalController = require("./routes/userJournalRoute");
-app.use("/auth", userJournalController);
+app.use("/journal", userJournalController);
 
 const authPageController = require("./routes/authRoute");
 app.use("/", authPageController);
