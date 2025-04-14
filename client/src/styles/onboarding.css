@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.onboarding-container {
+    max-width: 390px;
+    width: 100%;
+    background-color: #FFFED3;
+    min-height: 100vh;
+    padding: 20px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* Welcome Banner */
+.welcome-banner {
+    width: 100%;
+    background-color: #DDD67B;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.welcome-banner h1 {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 1.5rem;
+    color: #4A4204;
+    margin: 0;
+}
+
+/* Image + Quiz Text */
+.header-image {
+    margin-top: 15px;
+    width: 120px;
+    height: auto;
+}
+
+.header-image-2 {
+    margin: 28px 0;
+    width: 120px;
+    height: auto;
+    width: 100%;
+    max-width: 210px;
+    height: auto;
+    margin: 20px 0;
+  }
+
+.header-image-3 {
+    margin: 28px 0;
+    width: 120px;
+    height: auto;
+}
+
+.header-image-4 {
+  margin: 28px 0;
+  width: 120px;
+  height: auto;
+  width: 170px;
+}
+
+.start-quiz-text {
+    font-family: 'Reem Kufi', sans-serif;
+    color: #4A4204;
+    font-size: 32px;
+    margin: 10px 0;
+}
+
+/* Question Box */
+.question-box {
+    background-color: #DDD67B;
+    border-radius: 20px;
+    padding: 20px;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+.question-label {
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: #000;
+    text-align: center;
+}
+
+.answer-input {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    resize: none;
+    color: #000;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.answer-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 16px;
+  }
+  
+
+.checkbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    font-family: 'Reem Kufi', sans-serif;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .checkbox-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #4A4204; /* modern checkbox color */
+  }
+  
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+  }
+  
+  /* Next Button */
+.next-button {
+    background-color: #4A4204;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+  /* Center NEXT button */
+  .next-button1 {
+    background-color: #4A4204;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin: 0 auto;
+  }
+  
+  /* Icon Button (Previous) on the left */
+  .icon-button {
+    width: 48px;
+    height: 48px;
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    position: absolute;
+    left: 0;
+  }
+  

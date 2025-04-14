@@ -5,14 +5,12 @@
     background-color: #D9EEF3;
     text-align: center;
     padding: 20px;
-    height: 100vh;
+    height: 110vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;
     margin: 0 auto;
-    width: 100%;
     box-sizing: border-box;
 }
 
