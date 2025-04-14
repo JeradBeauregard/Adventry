@@ -1,0 +1,142 @@
+/* Page Container */
+.chat-container {
+    width: 100%;
+    height: 100vh;
+    max-width: 393px;
+    margin: 0 auto;
+    background-color: #DCEFF6;
+    font-family: 'Reem Kufi', sans-serif;
+    padding: 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* Chat Header */
+  .chat-header {
+    background-color: #037DC4;
+    padding: 12px 16px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .back-button {
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .chat-character {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin-right: 36px;
+  }
+  
+  .cat-image {
+    width: 100px;
+    height: auto;
+    margin-left: 110px;
+  }
+  
+  /* Chat Messages */
+  .chat-messages {
+    flex: 1;
+    margin-top: 16px;
+    padding: 16px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .message {
+    max-width: 80%;
+    font-size: 14px;
+    line-height: 1.4;
+    padding: 12px 16px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .message.received {
+    background-color: #F4FFE1;
+    color: #333;
+    align-self: flex-start; /* Align received message to the left */
+  }
+  
+  .message.sent {
+    background-color: #FDEEEE;
+    color: #333;
+    align-self: flex-end; /* Align sent message to the right */
+  }
+  
+  .message.received::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 12px;
+    width: 10px;
+    height: 10px;
+    background-color: #8ce278;
+    border-radius: 50%;
+  }
+  
+  /* Message Input Area */
+  .message-input {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 20px;
+    margin-top: 12px;
+    gap: 10px;
+  }
+  
+  .mic-button {
+    background: none;
+    border: none;
+    color: #666;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .message-input input {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 14px;
+    border-radius: 16px;
+    background-color: #f4f4f4;
+    border: none;
+    outline: none;
+  }
+  
+  .send-button {
+    background-color: #4ba3e0;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .send-button.active {
+    background-color: #2980b9;
+  }
+  

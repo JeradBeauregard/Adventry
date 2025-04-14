@@ -24,7 +24,7 @@ const OnboardingPage2 = () => {
       <img src={catImage2} alt="Cute Cat" className="header-image-2" />
 
       <div className="question-box">
-        <p className="question-label">What’s your current Education  level?</p>
+        <p className="question-label">What’s your current Education level?</p>
         <textarea
           placeholder="Answer"
           className="answer-input"
