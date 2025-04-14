@@ -7,7 +7,7 @@ body {
     justify-content: space-between;
     gap: 15px;
     width: 100%;
-    max-width: 350px; /* Adjust for mobile layout */
+    max-width: 350px;
     margin-top: 20px;
 }
   

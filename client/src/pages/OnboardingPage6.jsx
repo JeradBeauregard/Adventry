@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../styles/onboarding.css";
-import catImage2 from "../assets/cat2.png";
+import catImage1 from "../assets/cat1.png";
 import { FaArrowLeft } from "react-icons/fa";
 
 const OnboardingPage3 = () => {
@@ -9,11 +9,11 @@ const OnboardingPage3 = () => {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handlePreviousClick = () => {
-    navigate("/onboarding4");
+    navigate("/onboarding5");
   };
 
   const handleNextClick = () => {
-    navigate("/onboarding6");
+    navigate("/onboarding7");
   };
 
   return (
@@ -22,24 +22,20 @@ const OnboardingPage3 = () => {
         <h1>Great, XYZ</h1>
       </div>
 
-      <img src={catImage2} alt="Cute Cat" className="header-image-2" />
+      <img src={catImage1} alt="Cute Cat" className="header-image-3" />
 
       <div className="question-box">
-        <p className="question-label">What personality best describes your companion?</p>
+        <p className="question-label">Would you like your companion to send you encouraging reminders?</p>
 
         <div className="answer-box">
-        <div className="checkbox-list-1">
+        <div className="checkbox-list-2">
           <label className="checkbox-item">
             <input type="checkbox" />
-            <span>Playful & energetic</span>
+            <span>Yes</span>
           </label>
           <label className="checkbox-item">
             <input type="checkbox" />
-            <span>Calm & supportive</span>
-          </label>
-          <label className="checkbox-item">
-            <input type="checkbox" />
-            <span> Wise & thoughtful</span>
+            <span>No</span>
           </label>
         </div>
         </div>
