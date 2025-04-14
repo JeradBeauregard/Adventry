@@ -11,12 +11,32 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // Parses JSON requests
 // routing requirements
 
+// cookies parser
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
+
 //set up server listening
 app.listen(port, () => { // listens for server 
 console.log(`Listening on http://localhost:${port}`); // when server runs callback function console.log executes
 });
 
 // ROUTING
+
+const userJournalController = require("./routes/userJournalRoute");
+app.use("/auth", userJournalController);
+
+const authPageController = require("./routes/authRoute");
+app.use("/", authPageController);
+
+
+const journalSession = require("./routes/JournalSessionApi");
+
+app.use("/JournalApi", journalSession);
+
+const authApi = require("./routes/authApiRoute");
+
+app.use("/authApi",authApi );
 
 //test message
 app.get("/", (req, res) => {  // app.get is a get request to app which represents our express application

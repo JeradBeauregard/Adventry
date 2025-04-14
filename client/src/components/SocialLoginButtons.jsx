@@ -1,5 +1,5 @@
 import React from "react";
-import "./../styles/global.css";
+import "../styles/global.css";
 import googleIcon from "../assets/google.png";
 import facebookIcon from "../assets/facebook.png";
 import twitterIcon from "../assets/twitter.png";

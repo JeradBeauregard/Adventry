@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./../styles/signIn.css";
+import "../styles/signIn.css";
 import SocialLoginButtons from "../components/SocialLoginButtons";
 import avatar from "../assets/avatar.png";
 

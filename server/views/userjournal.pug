@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    title Your Journals
+  body
+    h1 Welcome, #{username}!
+    a(href="/logout") Log Out
+
+    hr
+
+    h2 Start a New Journal
+    form(action="/journals" method="POST")
+      label(for="title") Title:
+      input(type="text" name="title" required)
+      br
+      label(for="message") First Message:
+      textarea(name="message" required)
+      br
+      button(type="submit") Start Journal
+
+    hr
+
+    h2 Your Existing Journals
+    if journals.length > 0
+      ul
+        each journal in journals
+          li
+            strong #{journal.title}
+            |  (Started on #{journal.created_at})
+    else
+      p You have no journals yet. Start one above!

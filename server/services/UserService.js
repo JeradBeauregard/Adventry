@@ -47,4 +47,6 @@ const deleteUser = async (id) => {
     });
 };
 
+
+
 module.exports = { getAllUsers, getUserById, createUser, updateUser, deleteUser };
