@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
-import OnboardingPage1 from "./pages/OnboardingPage1"; 
+import OnboardingPage1 from "./pages/OnboardingPage1";
 import OnboardingPage2 from "./pages/OnboardingPage2";
 import OnboardingPage3 from "./pages/OnboardingPage3";
 import OnboardingPage4 from "./pages/OnboardingPage4";
@@ -12,7 +12,7 @@ import OnboardingPage7 from "./pages/OnboardingPage7";
 import OnboardingPage8 from "./pages/OnboardingPage8";
 import HomePage from "./pages/HomePage";
 import JournalPage1 from "./pages/JournalPage1";
-
+import JournalsPage from "./pages/JournalsPage"; // ✅ New
 
 const App = () => {
   return (
@@ -30,6 +30,8 @@ const App = () => {
         <Route path="/onboarding8" element={<OnboardingPage8 />} />
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/JournalPage1" element={<JournalPage1 />} />
+        <Route path="/journaltest/:id" element={<JournalsPage />} />
+
       </Routes>
     </Router>
   );

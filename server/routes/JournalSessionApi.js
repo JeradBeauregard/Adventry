@@ -30,13 +30,18 @@ router.post("/AddMessage", async (request,response)=>{
 
 // start new journal
 
-router.get("/GetJournal", async (request, response)=>{
-
-    const {journal_id} = request.body;
-    const result = await JournalService.getJournal(journal_id);
-    response.json(result);
-
-});
+router.get("/GetJournal/:id", async (req, res) => {
+    const journal_id = req.params.id;
+  
+    try {
+      const result = await JournalService.getJournal(journal_id);
+      res.json(result);
+    } catch (err) {
+      console.error("Failed to load journal:", err.message);
+      res.status(404).json({ error: "Journal not found" }); // ✅ graceful fail
+    }
+  });
+  
 
 // journal user response
 

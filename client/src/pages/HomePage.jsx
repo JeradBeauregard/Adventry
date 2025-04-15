@@ -1,10 +1,16 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useAuth } from "../context/AuthContext";
 import "./../styles/home.css";
 import catImage from "../assets/cat.png";
 import { FaSearch, FaUser, FaCalendarAlt, FaPlus, FaHome } from "react-icons/fa";
 
 const HomePage = () => {
+  const { user, loading } = useAuth();
+
+  if (loading) return <p style={{ textAlign: "center", padding: "2rem" }}>Loading...</p>;
+  if (!user) return <Navigate to="/" replace />;
+
   return (
     <div className="home-container">
       {/* Top Row */}
@@ -18,17 +24,19 @@ const HomePage = () => {
       <div className="cat-notif-row">
         <img src={catImage} alt="Cute Cat" className="cat-img-small" />
         <div>
-            <div className="date-text">
+          <div className="date-text">
             {new Date().toLocaleDateString("en-US", {
-                weekday: "long",
-                day: "numeric",
-                month: "short",
+              weekday: "long",
+              day: "numeric",
+              month: "short",
             })}
+          </div>
+          <div className="notification-box">
+            <div className="notif-title">Notification</div>
+            <div className="notif-body">
+              Welcome {user.username || "friend"}! Excited for your first journal?
             </div>
-            <div className="notification-box">
-              <div className="notif-title">Notification</div>
-              <div className="notif-body">Welcome Jay! Excited for your first journal?</div>
-            </div>
+          </div>
         </div>
       </div>
 

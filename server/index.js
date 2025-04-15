@@ -1,31 +1,28 @@
 // REQUIRED
 
-require("dotenv").config({ path: __dirname + "/.env" }); // ⬅️ force it to use server/.env
+require("dotenv").config({ path: __dirname + "/.env" });
 
-
-
-const express = require("express"); // imports express modules
-const path = require("path"); // imports node.js pathing modules
-//set up Express object and port
-const app = express(); // creates express application, allows us to use http requests within app
-const port = process.env.PORT || "8888"; // sets up default port for localhost, if a service uses its own itll use that instead
-
-app.use(express.static(path.join(__dirname, "public"))); // to access public folder
-app.use(express.urlencoded({ extended: true })); 
-app.use(express.json()); // Parses JSON requests
-// routing requirements
-
-// cookies parser
+const express = require("express");
+const path = require("path");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
-app.use(cookieParser());
 
+const app = express();
+const port = process.env.PORT || "8888";
 
-//set up server listening
-app.listen(port, () => { // listens for server 
-console.log(`Listening on http://localhost:${port}`); // when server runs callback function console.log executes
-});
+// ✅ 1. CORS (MUST BE FIRST for credential-based requests)
+app.use(cors({
+  origin: "http://localhost:5173", // React (Vite) dev server
+  credentials: true // Allow cookies and authentication headers
+}));
 
-// ROUTING
+// ✅ 2. Core middleware
+app.use(express.json()); // Parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+app.use(cookieParser()); // Parse cookies
+app.use(express.static(path.join(__dirname, "public"))); // Serve static files
+
+// ✅ 3. Routes
 
 const userJournalController = require("./routes/userJournalRoute");
 app.use("/journal", userJournalController);
@@ -33,19 +30,11 @@ app.use("/journal", userJournalController);
 const authPageController = require("./routes/authRoute");
 app.use("/", authPageController);
 
-
 const journalSession = require("./routes/JournalSessionApi");
-
 app.use("/JournalApi", journalSession);
 
 const authApi = require("./routes/authApiRoute");
-
-app.use("/authApi",authApi );
-
-//test message
-app.get("/", (req, res) => {  // app.get is a get request to app which represents our express application
-    res.render("layout");
-    });
+app.use("/authApi", authApi);
 
 const userCMS = require("./routes/UserRoute");
 app.use("/userCMS", userCMS);
@@ -59,11 +48,22 @@ app.use("/petCMS", petCMS);
 const achievementCMS = require("./routes/AchievementsRoute");
 app.use("/achievementsCMS", achievementCMS);
 
-//PUG
+// ✅ 4. PUG setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
 
-app.set("views", path.join(__dirname, "views")); //Specifies the views folder where Pug template files are stored.
-                                                  //Express will look in this folder when rendering templates.
-app.set("view engine", "pug"); // Sets Pug as the template engine.
-                                //This allows Express to automatically convert .pug files into HTML when using res.render().
+// ✅ 5. React static build (production only)
+if (process.env.NODE_ENV === "production") {
+  const clientBuildPath = path.join(__dirname, "../client/build");
+  app.use(express.static(clientBuildPath));
 
-//__dirname: This is a built-in Node.js variable that gives the absolute path of the current directory (where your script is running).
+  // All unmatched routes go to React app
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(clientBuildPath, "index.html"));
+  });
+}
+
+// ✅ 6. Server start
+app.listen(port, () => {
+  console.log(`🔥 Server running at http://localhost:${port}`);
+});
