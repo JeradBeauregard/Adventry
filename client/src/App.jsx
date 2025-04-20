@@ -13,6 +13,7 @@ import OnboardingPage8 from "./pages/OnboardingPage8";
 import HomePage from "./pages/HomePage";
 import JournalPage1 from "./pages/JournalPage1";
 import JournalsPage from "./pages/JournalsPage"; // ✅ New
+import JournalPage from "./pages/journalPage";
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/homepage" element={<HomePage />} />
         <Route path="/JournalPage1" element={<JournalPage1 />} />
         <Route path="/journaltest/:id" element={<JournalsPage />} />
+        <Route path="/Journal/:id" element={<JournalPage />} />
 
       </Routes>
     </Router>

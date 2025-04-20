@@ -1,52 +1,73 @@
-const JournalService = require("../services/JournalSessionService");
-
-
 const express = require("express");
 const router = express.Router();
+const JournalService = require("../services/JournalSessionService");
+const authMiddleware = require("../middleware/authMiddleware");
+const db = require("../db");
 
-// start new journal
-// Creates journal entry for user, adds first message to conversations table
-router.post("/StartJournal", async (request,response)=>{
+// 🔐 Middleware-protected routes using JWT
 
-    const {user_id, title, first_message } = request.body;
+// Start new journal
+router.post("/StartJournal", authMiddleware, async (req, res) => {
+  try {
+    const user_id = req.user?.user_id;
+    const { title, first_message } = req.body;
+
+    if (!user_id) return res.status(401).json({ error: "Unauthorized" });
+    if (!title || !first_message) return res.status(400).json({ error: "Missing fields" });
+
+    console.log("🔢 Starting journal:", { user_id, title });
+
     const result = await JournalService.startJournal(user_id, title, first_message);
-    response.json(result);  
-    
-
-
+    res.json(result);
+  } catch (error) {
+    console.error("❌ Error in /StartJournal:", error.message);
+    res.status(500).json({ error: "Failed to start journal: " + error.message });
+  }
 });
 
-// add message 
-// start journal and add message automatically call the system response and add its the db
-router.post("/AddMessage", async (request,response)=>{
+// Add message
+router.post("/AddMessage", authMiddleware, async (req, res) => {
+  try {
+    const { journal_id, user_message } = req.body;
+    if (!journal_id || !user_message) return res.status(400).json({ error: "Missing fields" });
 
-    const { journal_id, user_message } = request.body;
-    const result = await  JournalService.addMessage(journal_id, user_message);
-    response.json(result);
+    console.log("💬 AddMessage received:", { journal_id, user_message });
 
-
+    const result = await JournalService.addMessage(journal_id, user_message);
+    res.json(result);
+  } catch (error) {
+    console.error("❌ Error in /AddMessage:", error.message);
+    res.status(500).json({ error: "Failed to add message: " + error.message });
+  }
 });
 
-
-// start new journal
-
-router.get("/GetJournal/:id", async (req, res) => {
+// Get journal by ID
+router.get("/GetJournal/:id", authMiddleware, async (req, res) => {
+  try {
     const journal_id = req.params.id;
-  
-    try {
-      const result = await JournalService.getJournal(journal_id);
-      res.json(result);
-    } catch (err) {
-      console.error("Failed to load journal:", err.message);
-      res.status(404).json({ error: "Journal not found" }); // ✅ graceful fail
-    }
-  });
-  
+    console.log("📘 Fetching journal:", journal_id);
 
-// journal user response
+    const result = await JournalService.getJournal(journal_id);
+    res.json(result);
+  } catch (error) {
+    console.error("❌ Failed to load journal:", error.message);
+    res.status(404).json({ error: "Journal not found." });
+  }
+});
 
-// journal system response (ai)
+// Get all journals for the logged-in user
+router.get("/MyJournals", authMiddleware, async (req, res) => {
+  try {
+    const user_id = req.user?.user_id;
+    if (!user_id) return res.status(401).json({ error: "Unauthorized" });
 
-// get completed journal
+    const result = await db.execute("SELECT id, title, created_at FROM journal_entries WHERE user_id = ?", [user_id]);
+    res.json(result[0]);
+  } catch (err) {
+    console.error("❌ Error fetching journals:", err.message);
+    res.status(500).json({ error: "Failed to get journals" });
+  }
+});
 
-module.exports = router; // Export the router
+
+module.exports = router;
