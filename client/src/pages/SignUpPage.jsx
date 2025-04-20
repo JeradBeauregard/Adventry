@@ -1,10 +1,93 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "./../styles/signUp.css";
 import SocialLoginButtons from "../components/SocialLoginButtons";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    termsAccepted: false,
+  });
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    const { id, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    const { name, email, password, confirmPassword, termsAccepted } = formData;
+
+    if (!name || !email || !password || !confirmPassword) {
+      return setError("Please fill out all fields.");
+    }
+    if (password !== confirmPassword) {
+      return setError("Passwords do not match.");
+    }
+    if (!termsAccepted) {
+      return setError("You must accept the terms and policy.");
+    }
+
+    try {
+      // Step 1: Register
+      const registerRes = await fetch("http://localhost:8888/authApi/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // Important for cookies
+        body: JSON.stringify({ username: name, email, password }),
+      });
+
+      if (!registerRes.ok) {
+        const errorText = await registerRes.text();
+        throw new Error(errorText || "Registration failed");
+      }
+
+      // Step 2: Login (with same credentials)
+      const loginRes = await fetch("http://localhost:8888/authApi/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!loginRes.ok) {
+        const errorText = await loginRes.text();
+        throw new Error(errorText || "Auto-login failed");
+      }
+
+      // Step 3: Get user profile
+      const userRes = await fetch("http://localhost:8888/authApi/me", {
+        credentials: "include",
+      });
+
+      if (!userRes.ok) {
+        throw new Error("Failed to fetch user profile");
+      }
+
+      const userData = await userRes.json();
+
+      // Step 4: Save to context + redirect
+      login(userData);
+      navigate("/homepage");
+    } catch (err) {
+      console.error("Sign up error:", err.message);
+      setError("Sign up failed: " + err.message);
+    }
+  };
 
   return (
     <div className="sign-up-container">
@@ -17,25 +100,63 @@ const SignUpPage = () => {
 
       <h2 className="signup-heading">Create Your Account</h2>
 
-      <form className="signup">
+      <form className="signup" onSubmit={handleSubmit}>
         <label htmlFor="name" className="input-label">Name</label>
-        <input type="text" id="name" placeholder="Jon Smith" className="input-field" />
+        <input
+          type="text"
+          id="name"
+          placeholder="Jon Smith"
+          className="input-field"
+          value={formData.name}
+          onChange={handleChange}
+        />
 
         <label htmlFor="email" className="input-label">Email</label>
-        <input type="email" id="email" placeholder="jon.smith@email.com" className="input-field" />
+        <input
+          type="email"
+          id="email"
+          placeholder="jon.smith@email.com"
+          className="input-field"
+          value={formData.email}
+          onChange={handleChange}
+        />
 
         <label htmlFor="password" className="input-label">Password</label>
-        <input type="password" id="password" placeholder="********" className="input-field" />
+        <input
+          type="password"
+          id="password"
+          placeholder="********"
+          className="input-field"
+          value={formData.password}
+          onChange={handleChange}
+        />
 
-        <label htmlFor="confirm-password" className="input-label">Confirm Password</label>
-        <input type="password" id="confirm-password" placeholder="********" className="input-field" />
+        <label htmlFor="confirmPassword" className="input-label">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          placeholder="********"
+          className="input-field"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+        />
 
         <div className="terms-container">
-          <input type="checkbox" id="terms" className="checkbox" />
-          <label htmlFor="terms" className="terms-label">I understand the terms & policy.</label>
+          <input
+            type="checkbox"
+            id="termsAccepted"
+            className="checkbox"
+            checked={formData.termsAccepted}
+            onChange={handleChange}
+          />
+          <label htmlFor="termsAccepted" className="terms-label">
+            I understand the terms & policy.
+          </label>
         </div>
 
-        <button className="sign-up-button">Sign Up</button>
+        {error && <p className="error-message" style={{ color: "red" }}>{error}</p>}
+
+        <button className="sign-up-button" type="submit">Sign Up</button>
       </form>
 
       <p className="or-text">or sign up with</p>

@@ -2,10 +2,12 @@
 
 require("dotenv").config({ path: __dirname + "/.env" });
 
+
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const session = require("express-session"); // ← You need this!
 
 const app = express();
 const port = process.env.PORT || "8888";
@@ -21,6 +23,17 @@ app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(cookieParser()); // Parse cookies
 app.use(express.static(path.join(__dirname, "public"))); // Serve static files
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || "supersecret", // Replace in prod
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false,            // Set to true with HTTPS in prod
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24 // 1 day
+  }
+}));
 
 // ✅ 3. Routes
 
