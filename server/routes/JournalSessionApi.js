@@ -4,7 +4,7 @@ const JournalService = require("../services/JournalSessionService");
 const authMiddleware = require("../middleware/authMiddleware");
 const db = require("../db");
 
-// 🔐 Middleware-protected routes using JWT
+//  Middleware-protected routes using JWT
 
 // Start new journal
 router.post("/StartJournal", authMiddleware, async (req, res) => {
@@ -15,12 +15,12 @@ router.post("/StartJournal", authMiddleware, async (req, res) => {
     if (!user_id) return res.status(401).json({ error: "Unauthorized" });
     if (!title || !first_message) return res.status(400).json({ error: "Missing fields" });
 
-    console.log("🔢 Starting journal:", { user_id, title });
+    console.log(" Starting journal:", { user_id, title });
 
     const result = await JournalService.startJournal(user_id, title, first_message);
     res.json(result);
   } catch (error) {
-    console.error("❌ Error in /StartJournal:", error.message);
+    console.error(" Error in /StartJournal:", error.message);
     res.status(500).json({ error: "Failed to start journal: " + error.message });
   }
 });
@@ -31,12 +31,12 @@ router.post("/AddMessage", authMiddleware, async (req, res) => {
     const { journal_id, user_message } = req.body;
     if (!journal_id || !user_message) return res.status(400).json({ error: "Missing fields" });
 
-    console.log("💬 AddMessage received:", { journal_id, user_message });
+    console.log(" AddMessage received:", { journal_id, user_message });
 
     const result = await JournalService.addMessage(journal_id, user_message);
     res.json(result);
   } catch (error) {
-    console.error("❌ Error in /AddMessage:", error.message);
+    console.error(" Error in /AddMessage:", error.message);
     res.status(500).json({ error: "Failed to add message: " + error.message });
   }
 });
@@ -45,7 +45,7 @@ router.post("/AddMessage", authMiddleware, async (req, res) => {
 router.get("/GetJournal/:id", authMiddleware, async (req, res) => {
   try {
     const journal_id = req.params.id;
-    console.log("📘 Fetching journal:", journal_id);
+    console.log(" Fetching journal:", journal_id);
 
     const result = await JournalService.getJournal(journal_id);
     res.json(result);
@@ -64,7 +64,7 @@ router.get("/MyJournals", authMiddleware, async (req, res) => {
     const result = await db.execute("SELECT id, title, created_at FROM journal_entries WHERE user_id = ?", [user_id]);
     res.json(result[0]);
   } catch (err) {
-    console.error("❌ Error fetching journals:", err.message);
+    console.error(" Error fetching journals:", err.message);
     res.status(500).json({ error: "Failed to get journals" });
   }
 });

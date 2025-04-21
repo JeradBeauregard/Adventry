@@ -122,7 +122,7 @@ Keep it under 300 characters. Always end with a reflective question. You are an 
 
     return response.choices[0].message.content;
   } catch (error) {
-    console.error("🔴 OpenAI API Error:", error);
+    console.error(" OpenAI API Error:", error);
     return `Error: ${error.message}`;
   }
 }
