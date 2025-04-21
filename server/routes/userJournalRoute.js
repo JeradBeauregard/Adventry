@@ -27,7 +27,7 @@ async function requireOnboarding(req, res, next) {
   next();
 }
 
-// ✅ ONBOARDING ROUTES
+//  ONBOARDING ROUTES
 
 // Show onboarding form
 router.get("/onboarding", requireAuth, async (req, res) => {
@@ -66,7 +66,7 @@ router.post("/onboarding", requireAuth, async (req, res) => {
   res.redirect("/journal/journals");
 });
 
-// ✅ JOURNAL ROUTES
+//  JOURNAL ROUTES
 
 // View all journals
 router.get("/journals", requireAuth, requireOnboarding, async (req, res) => {
@@ -118,7 +118,7 @@ router.post("/:id/reply", requireAuth, requireOnboarding, async (req, res) => {
   }
 });
 
-// ✅ AUTH & DEV ROUTES
+//  AUTH & DEV ROUTES
 
 // Log out (clears cookie)
 router.get("/logout", (req, res) => {
