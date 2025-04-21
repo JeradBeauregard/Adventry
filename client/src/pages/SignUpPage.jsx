@@ -47,7 +47,7 @@ const SignUpPage = () => {
       const registerRes = await fetch("http://localhost:8888/authApi/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // Important for cookies
+        credentials: "include",
         body: JSON.stringify({ username: name, email, password }),
       });
 
@@ -56,7 +56,7 @@ const SignUpPage = () => {
         throw new Error(errorText || "Registration failed");
       }
 
-      // Step 2: Login (with same credentials)
+      // Step 2: Login
       const loginRes = await fetch("http://localhost:8888/authApi/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -69,7 +69,7 @@ const SignUpPage = () => {
         throw new Error(errorText || "Auto-login failed");
       }
 
-      // Step 3: Get user profile
+      // Step 3: Fetch user profile
       const userRes = await fetch("http://localhost:8888/authApi/me", {
         credentials: "include",
       });
@@ -80,9 +80,14 @@ const SignUpPage = () => {
 
       const userData = await userRes.json();
 
-      // Step 4: Save to context + redirect
+      // Step 4: Save to context and redirect based on onboarding
       login(userData);
-      navigate("/homepage");
+
+      if (userData.has_completed_onboarding) {
+        navigate("/homepage");
+      } else {
+        navigate("/onboarding1");
+      }
     } catch (err) {
       console.error("Sign up error:", err.message);
       setError("Sign up failed: " + err.message);
